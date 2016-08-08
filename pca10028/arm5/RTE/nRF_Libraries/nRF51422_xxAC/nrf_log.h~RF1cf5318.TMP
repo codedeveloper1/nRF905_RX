@@ -10,15 +10,15 @@
 #define NUM_VA_ARGS(...) (sizeof((const char*[]){ 0, ##__VA_ARGS__ })/sizeof(const char*)-1)
 
 #ifndef NRF_LOG_USES_RTT
-#define NRF_LOG_USES_RTT 1
+#define NRF_LOG_USES_RTT 0
 #endif
 
 #ifndef NRF_LOG_USES_UART
-#define NRF_LOG_USES_UART 1
+#define NRF_LOG_USES_UART 0
 #endif
 
 #ifndef NRF_LOG_USES_RAW_UART
-#define NRF_LOG_USES_RAW_UART 1
+#define NRF_LOG_USES_RAW_UART 0
 #endif
 
 #if defined(NRF_LOG_USES_RTT) && NRF_LOG_USES_RTT == 1
