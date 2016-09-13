@@ -19,30 +19,41 @@
 #include "app_error.h"
 #include "nRF905.h"
 
+#define SPI0_ENABLED 1
+#if (SPI0_ENABLED == 1)
+#define SPI0_USE_EASY_DMA 1
+#endif
+
+void Spi_init(void)
+{
+	 nrf_drv_spi_config_t spi_config = NRF_DRV_SPI_DEFAULT_CONFIG(SPI_INSTANCE);
+	spi_config.sck_pin = SPI_SCK_PIN;
+	spi_config.miso_pin = SPI_MISO_PIN;
+	spi_config.mosi_pin = SPI_MOSI_PIN;
+    	spi_config.ss_pin = CSN;
+	spi_config.mode = NRF_DRV_SPI_MODE_0;
+	spi_config.bit_order = NRF_DRV_SPI_BIT_ORDER_MSB_FIRST;
+	spi_config.frequency = NRF_DRV_SPI_FREQ_4M;
+	APP_ERROR_CHECK(nrf_drv_spi_init(&spi, &spi_config, NULL));
+}
 
 int main(void)
 {
-		//nRF905 pin configure
-		pin_configure();
+	Spi_init();
+
+	/* nRF905 pin configure */
+	pin_configure();
 	
-    nrf_drv_spi_config_t spi_config = NRF_DRV_SPI_DEFAULT_CONFIG(SPI_INSTANCE);
-		spi_config.sck_pin = SPI_SCK_PIN;
-		spi_config.miso_pin = SPI_MISO_PIN;
-		spi_config.mosi_pin = SPI_MOSI_PIN;
-    spi_config.ss_pin = SPI_SS_PIN;
-    APP_ERROR_CHECK(nrf_drv_spi_init(&spi, &spi_config, spi_event_handler));
-
-		Write_Config(US);
+	Write_Config();
 		
-		/***********************************************************
-		read register configuration, check register value written */
-		read_config();
-			 
-    while(1)
-    {
-			nRF905_rxData();
-
-      LEDS_INVERT(BSP_LED_0_MASK);
-      nrf_delay_ms(200);
-    }
+	/***********************************************************
+	read register configuration, check register value written */
+	read_config();
+	
+    	while(1)
+    	{
+		nRF905_rxData();
+		
+      		nrf_delay_ms(200);
+    	}
 }
