@@ -377,9 +377,9 @@ rf51xxx.flm))</FlashDriverDll>
           <GroupName>Application</GroupName>
           <Files>
             <File>
-              <FileName>main.c</FileName>
+              <FileName>main_Tx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\main.c</FilePath>
+              <FilePath>..\..\main_Tx.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
